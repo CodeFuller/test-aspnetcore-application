@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -38,14 +38,14 @@ namespace TestAspNetCoreApplication
 
 			app.UseAuthorization();
 
-			// Redirecting root request to /swagger
-			var option = new RewriteOptions();
-			option.AddRedirect("^$", "swagger");
-			app.UseRewriter(option);
-
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+
+				endpoints.MapGet("/", async context =>
+				{
+					await context.Response.WriteAsync("It works. Congratulations! Access Swagger help at /swagger endpoint.");
+				});
 			});
 
 			app.UseOpenApi();

@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="CodeFuller.Library.Logging" Version="7.2.0" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.10.9" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="all" />
   </ItemGroup>
 

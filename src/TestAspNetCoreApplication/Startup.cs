@@ -16,13 +16,16 @@ namespace TestAspNetCoreApplication
 			this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
 		}
 
-		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
+
+			services.AddSwaggerDocument(settings =>
+			{
+				settings.Title = "Test ASP.NET Core Application";
+			});
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
@@ -38,6 +41,9 @@ namespace TestAspNetCoreApplication
 			{
 				endpoints.MapControllers();
 			});
+
+			app.UseOpenApi();
+			app.UseSwaggerUi3();
 		}
 	}
 }

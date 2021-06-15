@@ -1,21 +1,15 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                bat "dotnet restore ${workspace}/TestAspNetCoreApplication.sln --runtime win-x64"
-                bat "dotnet build ${workspace}/TestAspNetCoreApplication.sln --configuration Release --no-restore"
-            }
-        }
-        stage('Test') {
-            steps {
-                bat "dotnet test ${workspace}/TestAspNetCoreApplication.sln --configuration Release --no-build --logger \"trx;LogFileName=TestAspNetCoreApplication.trx\""
+                bat "docker build --target build -t test-aspnetcore-application-test-results -f ${workspace}/src/TestAspNetCoreApplication/Dockerfile ."
+                bat "docker create -ti --name test-results test-aspnetcore-application-test-results"
+                bat "docker cp test-results:/project/tests/TestAspNetCoreApplication.IntegrationTests/TestResults/TestAspNetCoreApplication.trx ${workspace_tmp}/TestAspNetCoreApplication.IntegrationTests.trx"
+                bat "docker rm -fv test-results"
                 mstest testResultsFile:"**/*.trx", keepLongStdio: true
-            }
-        }
-        stage('Publish') {
-            steps {
-                bat "dotnet publish ${workspace}/src/TestAspNetCoreApplication/TestAspNetCoreApplication.csproj --configuration Release --runtime win-x64"
+
+                bat "docker build -t test-aspnetcore-application:latest -f ${workspace}/src/TestAspNetCoreApplication/Dockerfile ."
             }
         }
     }

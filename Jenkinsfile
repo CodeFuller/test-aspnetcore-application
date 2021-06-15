@@ -10,6 +10,7 @@ pipeline {
         stage('Test') {
             steps {
                 bat "dotnet test --configuration Release --no-build ${workspace}/TestAspNetCoreApplication.sln"
+                mstest testResultsFile:"**/*.trx", keepLongStdio: true
             }
         }
         stage('Publish') {

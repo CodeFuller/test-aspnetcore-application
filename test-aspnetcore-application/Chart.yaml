@@ -1,0 +1,7 @@
+apiVersion: v2
+name: test-aspnetcore-application
+description: A Helm chart for test ASP.NET Core application
+version: 0.1.0
+appVersion: "1.0.0"
+sources:
+- "https://github.com/CodeFuller/test-aspnetcore-application"

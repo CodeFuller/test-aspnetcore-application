@@ -4,14 +4,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    def hasFailedTests = false
+                    def hasFailedTests = true
                     try {
                         sh (
                             script: "docker cp cucatalog-test-results-${env.BUILD_VERSION}:/build/success.flg ${flgFileName}",
                             label: "Check Tests Results"
                         )
                     } catch (Exception e) {
-                        hasFailedTests = true
+                        hasFailedTests = false
                     }
 
                     if (hasFailedTests) {

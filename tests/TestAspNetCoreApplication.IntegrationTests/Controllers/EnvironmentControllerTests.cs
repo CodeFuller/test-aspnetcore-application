@@ -29,7 +29,7 @@ namespace TestAspNetCoreApplication.IntegrationTests.Controllers
 
 			// Assert
 
-			variables.Should().ContainSingle(x => x.Name == "TEST_ENVIRONMENT_VARIABLE" && x.Value == "Some Test Value");
+			variables.Should().ContainSingle(x => x.Name == "TEST_ENVIRONMENT_VARIABLE" && x.Value == "Not Some Test Value");
 		}
 	}
 }

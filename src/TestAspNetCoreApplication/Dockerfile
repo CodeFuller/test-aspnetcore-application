@@ -14,7 +14,7 @@ COPY . "/project/"
 
 RUN dotnet build "/project/TestAspNetCoreApplication.sln" --no-restore -c Release
 
-RUN dotnet test "/project/TestAspNetCoreApplication.sln" --no-build -c Release --logger "trx;LogFileName=TestAspNetCoreApplication.trx" 
+RUN dotnet test "/project/TestAspNetCoreApplication.sln" --no-build -c Release --logger "trx;LogFileName=TestAspNetCoreApplication.trx"; exit 0
 
 FROM build AS publish
 RUN dotnet publish "/project/src/TestAspNetCoreApplication/TestAspNetCoreApplication.csproj" --no-build -c Release -o /app/publish

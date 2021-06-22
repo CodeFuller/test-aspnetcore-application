@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    options {
+        skipStagesAfterUnstable()
+    }
     stages {
         stage('Build Docker Image') {
             steps {
@@ -10,6 +13,13 @@ pipeline {
                 mstest testResultsFile:"${workspace_tmp}/TestAspNetCoreApplication.IntegrationTests.trx", failOnError: true, keepLongStdio: true
 
                 bat "docker build -t test-aspnetcore-application:latest -f ${workspace}/src/TestAspNetCoreApplication/Dockerfile ."
+            }
+        }
+        stage("Publish Artifacts") {
+            steps {
+                script {
+                    println "Publishing build artifacts ..."
+                }
             }
         }
     }

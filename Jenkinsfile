@@ -11,6 +11,7 @@ pipeline {
                     println("Detected build: '${item}'")
                 }
                 error("Terminating the build")
+            }
         }
     }
 }
